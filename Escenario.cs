@@ -5,28 +5,44 @@ using System.Text;
 namespace ProgramacionGrafica
 {
     class Escenario
-    {
-        List<Cubo> objetos;
+    {        
+        public Dictionary<string, Objeto> objetos;
+
+        public Escenario(Dictionary<string, Objeto>  objetos)
+        {
+            this.objetos = objetos;
+        }
+
         public Escenario()
         {
-            objetos = new List<Cubo>();
+            this.objetos = new Dictionary<string, Objeto>();
         }
 
-        public void addObjeto(Cubo objeto)
-        {
-            objetos.Add(objeto);
-        }
-
-        public List<Cubo> getObjetos()
+        public Dictionary<string, Objeto> getObjetos()
         {
             return this.objetos;
         }
 
+        public void setObjetos(Dictionary<string, Objeto> objetos)
+        {
+            this.objetos = objetos;
+        }
+
+        public void agregarObjeto(string nombre, Objeto objeto)
+        {
+            this.objetos.Add(nombre, objeto);
+        }
+
+        public void eliminarObjeto(string nombre)
+        {
+            this.objetos.Remove(nombre);
+        }
+        
         public void dibujar()
         {
-            foreach (Cubo objeto in objetos)
+            foreach (KeyValuePair<string, Objeto> objeto in objetos)
             {
-                objeto.dibujar2();
+                objeto.Value.dibujar();
             }
         }
 

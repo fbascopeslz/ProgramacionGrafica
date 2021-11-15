@@ -13,40 +13,81 @@ namespace ProgramacionGrafica
 {
     class Cara
     {
-        private List<Vector3> vectores;
-        private Vector3 color;
+        public List<Vector3> vertices;
+        public Vector3 centro; 
+        public Color color;
+        
+
         public Cara()
         {
-            vectores = new List<Vector3>();
+            this.vertices = new List<Vector3>();            
+            this.centro = new Vector3(0f, 0f, 0f); ;
+            this.color = Color.White;
         }
 
-        public void addVertice(Vector3 vertice)
+        public Cara(List<Vector3> vertices, Vector3 centro, Color color)
         {
-            vectores.Add(vertice);
-        }
-
-        public void addVertices(List<Vector3> vertices)
-        {
-            this.vectores = vertices;
-        }
-
-        public void addColor(Vector3 color)
-        {
+            this.vertices = vertices;            
+            this.centro = centro;
             this.color = color;
         }
 
-        public void addColor(float r, float a, float b)
+        public List<Vector3> getVertices()
         {
-            this.color = new Vector3(r, a, b);
+            return this.vertices;
+        }
+
+        public void setVertices(List<Vector3> vertices)
+        {
+            this.vertices = vertices;
+        }
+
+        public Vector3 getCentro()
+        {
+            return this.centro;
+        }
+
+        public void setCentro(Vector3 centro)
+        {
+            this.centro = centro;
+        }
+
+        public Color getColor()
+        {
+            return this.color;
+        }
+
+        public void setColor(Color color)
+        {
+            this.color = color;
+        }                       
+
+        public void agregarVertice(Vector3 vertice)
+        {
+            this.vertices.Add(vertice);
+        }
+
+        public void eliminarVertice(int posicion)
+        {
+            this.vertices.RemoveAt(posicion);
         }
 
         public void dibujar()
         {
             GL.Color3(this.color);
-            foreach (var vector in vectores)
-            {
-                GL.Vertex3(vector);
+            GL.Begin(PrimitiveType.Polygon);
+            
+            foreach (Vector3 vertice in this.vertices)
+            {               
+                GL.Vertex3(
+                    vertice.X + this.centro.X, 
+                    vertice.Y + this.centro.Y, 
+                    vertice.Z + this.centro.Z
+                    );
             }
+
+            GL.End();
         }
+
     }
 }
